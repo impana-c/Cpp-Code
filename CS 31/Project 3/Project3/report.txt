@@ -1,0 +1,95 @@
+a) A brief description of notable obstacles you overcame.
+b) A description of the design of your program. You should use pseudocode in this description where it clarifies the presentation.
+c) A list of the test data that could be used to thoroughly test your program, along with the reason for each test. You don't have to include the results of the tests, but you must note which test cases your program does not handle correctly. (This could happen if you didn't have time to write a complete solution, or if you ran out of time while still debugging a supposedly complete solution.) If you use the assert style above for writing your test code, you can copy those asserts, along with a very brief comment about what each is testing for. Notice that most of this portion of your report can be written just after reading the requirements in this specification, before you even start designing your program.
+--------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
+Part a)
+--------------------------------------------------------------------------------------------
+1. I kept getting tripped up on trying to create a string by concatenating two characters. Eventually I settled on creating a string and then changing the character at a certain index by using the .at() function. I think there is probably a better way to do this, but I will have to look into it.
+2. Another problem I faced was trying to convert a character that was a number, or even a string that was a number, into an integer. I learned about ASCII and how we can use -48 to get the correct number.
+3. Also since there were many loops and conditions in the program, keeping track of parentheses and brackets was also challenging.
+--------------------------------------------------------------------------------------------
+Part b)
+--------------------------------------------------------------------------------------------
+valid state code? {
+    list of valid state codes
+    return if statecode (must be uppercase) is in list
+}
+
+valid poll string? (poll string) {
+    repeatedly:
+        check each character of poll string
+        if any character is whitespace,
+            return false
+        if any character is not a comma, alphabet, or digit
+            return false
+        if the pollString contains 0 characters,
+            return true
+        if the beginning and ending char of poll strings are not letters
+            return false
+        if the second to last character of the string is a comma
+            return false
+        if the character before and after a comma is not a letter
+            return false
+    repeatedly:
+        change each character of poll string to upper case
+    repeatedly:
+        if there are two letters in a row and there is no comma before it
+            return false
+        if character at both current index and next index is a letter,
+            create a new string with these two characters
+            if new string is not valid state code,
+                return false
+            if the character after a valid state code is not a digit
+                return false
+            increment index
+        if there is only one character between a comma and another comma
+            return false
+        else if character at current index is a digit,
+            repeatedly:
+                count how many times until the next alphabet
+            if the count is not 1 or 2,
+                return false
+            increment index by count
+        if character at index is not a comma, digit, or letter,
+            return false
+    return true
+}
+
+count seats (poll string, party, variable seat count) {
+    if poll string is not valid poll string,
+        return 1
+    if party is not a letter,
+        return 2
+    new variable seats
+    repeatedly:
+        if uppercase character at index is the same as uppercase character of party,
+            if the character before it is not an alphabet,
+                if both the characters at 1 and 2 indexes before the current index are digits,
+                    increment seats by the 2 digit number before the character at current index
+                if only the character 1 index before current index is digit
+                    increment seats by the number one index before character at current index
+    set seat count to seats
+    return 0
+}
+--------------------------------------------------------------------------------------------
+Part c)
+--------------------------------------------------------------------------------------------
+1. countSeats CT5D ; d => basic test case for countSeats where there is 1 digit before d and seatCount should be 5(return 0)
+2. countSeats CT55D ; d => there are 2 digits before d, so the seatCount should be 55 and not 10 (return 0)
+3. countSeats CT5D,NY9R16D1I,VT,ne3r00D ; d => longer test case with multiple state forecasts, seatCount should add 5+16=21 (return 0)
+4. isValidPollString CT5D3t,VT => test case with two forecasts and a lowercase letter (valid)
+5. isValidPollString CT%7D => has an extraneous character % (not valid)
+6. isValidPollString CT567D => party result has 3 (not 1 or 2) digits before party code (not valid)
+7. isValidPollString CT 5D => poll string has whitespace (not valid)
+8. isValidPollString CT5D,NY9R16D1I,VT,ne3r00D => string with multiple components (valid)
+9. isValidPollString ZT5D,NY9R16D1I,VT,ne3r00D => similar to test 8, except ZT is not a valid state code (not valid)
+10. countSeats CT5D,NY9R16D1I,VT,ne3r00D ; % => the party parameter is not a letter, so seatCount should remain unchanged (return 2)
+11. isValidPollString CAOKNE => not a valid state forecast because not separated by commas (not valid)
+12. isValidPollString CT5D,NY9R16D1I,VT3,ne3r00D51 => stateforecasts without a part assigned to # of seats (not valid)
+13. isValidPollString CT5DE6TX,VT => double characters in a row that are not statecodes (not valid)
+14. countSeats CT5D,NY9R16D1I,VT3,ne3r00D51 ; d => not valid poll string (return 1)
+15. isValidPollString CT5D6T,V,VT => "V" is not a valid state forecast (not valid)
+16. isValidPollString CT5D6T,VT,V => "V" is not a valid state forecast (not valid)
+17. isValidPollString CT5D6T,OKCA,CA => "OKCA" is not a valid state forecast (not valid)
+18. isValidPollString ct5d,ny9r17+1i => "+" in the second state forecast is an extraneous character (not valid)

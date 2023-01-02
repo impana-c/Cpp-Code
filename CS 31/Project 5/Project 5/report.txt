@@ -1,0 +1,80 @@
+Impana Chimmalagi 205922567
+
+a. A brief description of notable obstacles you overcame.
+b. A description of the design of your program. You should use pseudocode in this description where it clarifies the presentation. Document the design of your main routine, playOneRound, and any other functions you write. Do not document the getWords or randInt functions.
+--------------------------------------------------------------------------------------------------------------------
+PART A)
+1. At first, for the probe word I defined everything using char _[7], and my program would fail to output the correct statement when the probe word was more than 6 characters. It would say "I don't know that word." when it should be saying "Your probe word must be a word of 4 to 6 lower case letters." However, since in the spec it says that the probe word output will never be longer than 100 characters, so I changed it to char _[101] in all of those such declarations.
+2. Also, on line 74 I originally used cin instead of getline. Then I realized this wouldn't work for probe words with a space in it as the program would deem it valid even when it is not. When I tried to use getline, I realized that it would work differently with C strings. For the first loop, I needed to add in cin.ignore and then I was able to fix this error.
+
+PART B)
+...
+check if probe word length is not 4-6
+check if probe word has any non-alphabet or non-lowercase characters
+check if probe word length is 4-6 and is not in the valid words list
+
+check whether words list or hidden words is not in range or is negative
+
+while hidden word and probe word are not equally:
+    if probe word not correct length or correct character type:
+        print 4-6 lowercase message
+    else if probe word not in list
+        print don't know that word message
+    else
+        increment number of tries
+        duplicate hidden word and probe word
+        traverse smaller word:
+            invalidate characters at index for hidden and probe word
+            increment golds
+        traverse hidden word word:
+            traverse probe word word:
+                if probe and hidden word have same character at some point and it is not the invalid character:
+                        invalidate characters at index for hidden and probe word
+                        increment silvers
+        print golds and silvers
+        reset gold and silver
+        
+initialize wordList and check if number of words is less than 1
+ask user for number of rounds and check if less than 0
+generate random hidden word from word list
+play one round on hidden word and words list
+print number of tries
+print average, min, and max
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"
+https://stackoverflow.com/questions/59918563/while-loop-skips-cin-getline-for-c-string

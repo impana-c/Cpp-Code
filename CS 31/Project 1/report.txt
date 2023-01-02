@@ -1,0 +1,48 @@
+Report
+Impana Chimmalagi
+------------------------------------------------------------------------------------------
+STEP 5:
+I entered numberSurveyed as an integer less than how much I entered in forBrian and forGavin.
+    
+    For example, I would enter 1, 2, and 3 for each of the prompts on the output console, such that the console would look like:
+    
+        How many registered voters were surveyed? 1
+        How many of them say they will vote for Gavin? 2
+        How many of them say they will vote for Brian? 3
+        200.0% say they will vote for Gavin.
+        300.0% say they will vote for Brian.
+        Brian is predicted to win the election.
+        Program ended with exit code: 0
+    As shown, 200.0 and 300.0% are incorrect outputs as it is impossible for 200 and 300% of registered voters to vote for a candidate. There are more people who say they will vote for either candidate than those who will vote in general.
+------------------------------------------------------------------------------------------
+STEP 6:
+I added parentheses to lns 27-28 at "forGavin / numberSurveyed" and "forBrian / numberSurveyed."
+
+    Original Output:
+        How many registered voters were surveyed? 100
+        How many of them say they will vote for Gavin? 25
+        How many of them say they will vote for Brian? 75
+
+        25.0% say they will vote for Gavin.
+        75.0% say they will vote for Brian.
+        Brian is predicted to win the election.
+        Program ended with exit code: 0
+        
+    Logic Error Output:
+        How many registered voters were surveyed? 100
+        How many of them say they will vote for Gavin? 25
+        How many of them say they will vote for Brian? 75
+
+        0.0% say they will vote for Gavin.
+        0.0% say they will vote for Brian.
+        Brian is predicted to win the election.
+        Program ended with exit code: 0
+        
+Since forGavin, forBrian and numberSurveyed are all integers, putting parentheses will cause the quotient to always be 0 as long as forGavin and forBrian are less than numberSurveyed, which we can assume to be a reasonable input. Previously, we didn't put parentheses which enabled the quotient to change from an int to a double since it forBrian and forGavin were being multiplied by the double 100.0.
+------------------------------------------------------------------------------------------
+STEP 7:
+Compilation Error #1:
+    I added a semicolon to line 37 at the end of "if (forGavin > forBrian)" resulting in the warning "If statement empty body" on line 37 and the error "Expected expression" on line 39.
+
+Compilation Error #2:
+    In line 14, I capitalized main(), creating a failure while building. On line 41, it shows an error saying that "Non-void function does not return a value."

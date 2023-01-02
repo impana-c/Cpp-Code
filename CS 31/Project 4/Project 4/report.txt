@@ -1,0 +1,94 @@
+a) A brief description of notable obstacles you overcame.
+b) A list of the test data that could be used to thoroughly test your functions, along with the reason for each test. You must note which test cases your program does not handle correctly. (This could happen if you didn't have time to write a complete solution, or if you ran out of time while still debugging a supposedly complete solution.) Notice that most of this portion of your report can be written just after you read the requirements in this specification, before you even start designing your program.
+----------------------------
+a) Obstacles:
+    1. In the positionOfMax function, I did not quite understand what the spec meant and at first, I interpreted the function as finding the first element in the array where all the elements before it were sorted alphabetically. Later, I realized that the function was asking to find the element in the array that came alphabetically last throughout the whole array.
+    2. In the subsequesnce function, I had a hard time figuring out how to work out the logic of the problem, specifically how to go through the whole subsequence and check if it was in the main string. I then started by tackling the first element of the substring and then using another for loop.
+    3. For the split function, I was unsure what to do in the case where an element of the array was equal to the splitter. I ended up moving all such elements to the end of the array using the rotateLeft and this would ensure that all of these kinds of elements would be before elements > in value than splitter and after elements < in value than splitter
+
+b) Test Cases:
+    string h[7] = { "rishi", "margaret", "gordon", "tony", "", "john", "liz" };
+    assert(lookup(h, 7, "john") == 5); // find position of an element after ""
+    assert(lookup(h, 7, "gordon") == 2); // find position of gordon throughout all elements
+    assert(lookup(h, 2, "gordon") == -1); // find position of gordon between only the first two elements (it is not found)
+    assert(lookup(h, 7, "") == 4); // lookup an empty string
+    
+    assert(positionOfMax(h, 7) == 3); // tony is the last alphabetically
+    assert(positionOfMax(h, 0) == -1); // when an empty array, there are no interesting elements so should return -1
+    string pm2[4] = {"1", "@", "!", "100"};
+    assert(positionOfMax(pm2, 4) == 1); //@ has the highest ASCII value
+    string pm3[4] = {"1", "12", "123", "1234"}; //testing an array of numbers in strings
+    assert(positionOfMax(pm3, 4) == 3);
+    
+    string leader[6] = { "boris", "rishi", "", "tony", "theresa", "david" };
+    string politician[5] = { "boris", "rishi", "david", "", "tony" };
+    assert(differ(leader, 6, politician, 5) == 2); // "" differs
+    assert(differ(leader, 2, politician, 1) == 1); // array 2 runs out first so return the length of array 2
+    assert(differ(leader, 2, politician, 0) == 0); // return length of array 2 since it ran out first
+    
+    assert(flip(leader, 4) == 4 && leader[0]=="tony"); // check basic flip
+
+    string g[4] = { "rishi", "margaret", "liz", "theresa" };
+    assert(differ(h, 4, g, 4) == 2); // liz and gordon differ at index 2
+    assert(appendToAll(g, 4, "?") == 4 && g[0] == "rishi?" && g[3] == "theresa?"); // check basic appendToAll
+    assert(rotateLeft(g, 4, 1) == 1 && g[1] == "liz?" && g[3] == "margaret?"); // check basic rotateLeft
+    assert(split(g, 4, "rishi") == 2); // liz is the first element not < splitter
+    
+    string people[5] = { "boris", "gordon", "rishi", "liz", "john" };
+    assert(appendToAll(people, 5, "!!!")==5); // check appendToAll wil multiple characters in string to be appended
+
+    string d[5] = { "margaret", "margaret", "margaret", "tony", "tony" };
+    assert(countRuns(d, 5) == 2); // margaret and tony are the 2 consecutive sequences
+    string d1[9] = {"tony", "boris", "rishi", "rishi", "gordon", "gordon", "gordon", "rishi", "rishi"};
+    assert(countRuns(d1, 9) == 5); // tony, boris, rishi, gordon, rishi are the 5 consecutive sequences
+
+    string f[3] = { "liz", "gordon", "tony" };
+    assert(lookupAny(h, 7, f, 3) == 2); // gordon appears in h at index 2
+    assert(flip(f, 3) == 3 && f[0] == "tony" && f[2] == "liz"); // this would reverse the array
+    
+    string e[4] = { "gordon", "tony", "", "john" };
+    assert(subsequence(h, 7, e, 4) == 2); // checks basic subsequence
+    string names[10] = { "john", "margaret", "theresa", "rishi", "boris", "liz" };
+    string names1[10] = { "margaret", "theresa", "rishi" };
+    assert(subsequence(names, 6, names1, 3) == 1); // checks basic subsequence when the array has no elements that are ""
+    string names2[10] = { "john", "rishi" };
+    assert(subsequence(names, 5, names2, 2) == -1);
+    assert(subsequence(names, 5, names2, 0) == 0); // when array 2 is empty, it is always in array 1 at position 0
+    assert(subsequence(names, 0, names2, 2) == -1); // when array 1 is empty, array 2 will never be in it
+    assert(subsequence(names, 0, names2, 0) == 0); // check when both are 0
+    
+    string namess[10] = { "john", "margaret", "theresa", "rishi", "boris", "liz" };
+    string set1[10] = { "david", "boris", "rishi", "margaret" };
+    assert(lookupAny(namess, 6, set1, 4) == 1); // boris is the first one that shows up in namess and its index in its set is 1
+    string set2[10] = { "tony", "gordon" }; // it doesn't show up
+    assert(lookupAny(namess, 6, set2, 2) == -1);
+    
+    assert(split(h, 7, "liz") == 3);
+    string pm1[6] = { "david", "liz", "margaret", "tony", "gordon", "boris" };
+    assert (split(pm1, 6, "john") == 3);
+    
+    // check all the cases for an array of empty strings
+    string empty[4] = {"","","",""};
+    assert(positionOfMax(empty, 4) == 0);
+    assert(lookup(empty, 4, "") == 0);
+    assert(differ(pm1,0,empty,0) == 0);
+    assert(differ(pm1,6,empty,4) == 0);
+    assert(appendToAll(empty, 4, "") == 4);
+    assert(rotateLeft(empty, 4, 1) == 1);
+    assert(subsequence(leader, 6, empty, 4) == -1);
+    assert(flip(empty, 4) == 4 && empty[0] == "" && empty[2] == "");\
+    assert(lookupAny(leader, 6, empty, 4) == 1);
+    assert(split(empty, 4, "") == 0);
+    
+    // check when passing an array/arrays of negative length
+    string x[5] = {"a", "b", "c", "d", "e"};
+    assert(positionOfMax(x, -4) == -1);
+    assert(lookup(x, -4, "") == -1);
+    assert(differ(pm1,0,x,-4) == -1);
+    assert(differ(pm1,-6,x,4) == -1);
+    assert(appendToAll(x, -4, "") == -1);
+    assert(rotateLeft(x, -4, 1) == -1);
+    assert(subsequence(x, -6, empty, 4) == -1);
+    assert(flip(x, -4) == -1);
+    assert(lookupAny(x, -6, empty, 4) == -1);
+    assert(split(x, -4, "") == -1);

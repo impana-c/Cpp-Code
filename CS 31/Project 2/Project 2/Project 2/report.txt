@@ -1,0 +1,38 @@
+REPORT:
+-----------
+
+PARTS
+a) A brief description of notable obstacles you overcame. (In Project 1, for example, some people had the problem of figuring out how to work with more than one version of a program in Visual C++.)
+b) A list of the test data that could be used to thoroughly test your program, along with the reason for each test. You don't have to include the results of the tests, but you must note which test cases your program does not handle correctly.
+
+-----------
+
+Part a)
+1. When trying to input an empty string when the program asked for "Name: " and occupation as well, I used cin at first, but the console kept expecting a non-empty string. I had to switch to getline(cin,name/occupation) for the progam to recognize that I was actually inputting an empty string.
+2. Then after I changed my code to getline for the name and the occupation, I realized that this would not work for occupation. The program would just skip over occupation and without even adding a new line it would ask for "Number of children: ". Upon doing some research (https://mathbits.com/MathBits/CompSci/APstrings/APgetline.htm),  I learned that I should avoid putting a getline after a cin. I decided to use the method of putting the trailing newline character in a dummy variable.
+3. When trying to output the amount as a non-negative number with exactly two digits to the right of the decimal point, I learned that I had to add "#include <iomanip>" in order to use setprecision. Until I added this statement, my program kept failing to compile.
+
+------------
+
+Part b)
+    Testing the given test cases:
+1. (Clara Barton, 115000, nurse, 5) -> $4200.00
+2. (Rachel Green, 29544.69, waitress, 0) -> $1181.79
+
+    Testing when the income goes over 125000:
+3. (Bob, 135000, nurse, 0) -> $4470.00
+
+    Testing when the income goes over 125000 and occupation is not nurse/teacher:
+4. (Bob, 135000, waitress, 0) -> $6170.00
+
+    Testing when the income goes over 125000 and has 1+ children (should not change compared to when there are 0 children as the project directions have instructed):
+5. (Bob, 135000, nurse, 5) -> $4470.00
+
+    Testing when the calculated amount is negative (amount should never go below 0):
+6. (Jill, 500, nurse, 12) -> $0.00
+
+    Testing all the erroneous/unusual inputs:
+7. ("", 100000, nurse, 0) -> You must enter a name
+8. (Sam, -100, nurse, 0) -> The taxable income must not be negative
+9. (Sam, 100000, "", 0) -> You must enter an occupation
+10. (Sam, 100000, nurse, -2) -> The number of children must not be negative
