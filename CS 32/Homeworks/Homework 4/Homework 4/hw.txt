@@ -1,0 +1,15 @@
+1E) Since the program pushes values into the array when k=2, it is changing the size of the vector, so the iterator would become invalid. As opposed to lists, vectors are continguous in memory, so any time the vector size is increased it will need to be reallocated enough memory and will probably change its memory location, which would make the iterator update the memory it is pointing to to some random memory location.
+
+3) Coord is a user-defined data type, so binary operators will not work when comparing a Coord object to other Coord objects. Thus, the program needs a < custom comparison operator that compares the values that are specifically contained within the object.
+
+4B) Because without a path string, you won't know where you came from. Since there can be multiple directories, after traversing all the way through one directory, you would need a path string to go back to the next directory.
+
+5A) O(N^3): Algorithm performs n comparisons between i and n and increments i n times. Algorithm initializes the value of j, n different times and performs n^2 comparisons between j and n. Algorithm increments j n^2 times and performs n^3 comparisons between k and n.
+
+5B) O(N^3): When i reaches n, j will also be compared with n and will perform n^2 comparisons between j and n. Although there are less operations performed in this code as opposed to the first one, its largest number of iterations in one loop is still the same and thus the time complexity is the same.
+
+6A) O(N^2): Insert has a time complexity of O(N) because worst case n elements will have to be shifted to insert the new element. And k is compared with n and will perform n comparisons between k and n. Insert is performed n times within the loop, so there are n^2 iterations.
+
+6B) N LOG N: Copying all items into V is O(N), and copying unique items from V into result is also O(N), but those is smaller in comparison than sorting v using an O(N log N) algorithm.
+
+6C) O(N): The for loop runs N times, and insertBefore is constant time complexity because adding an item to the front of a linked list does not require iterating through any additional elements apart from the head.

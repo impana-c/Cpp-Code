@@ -1,0 +1,31 @@
+Problem 2:
+    1. (5, 3)
+    2. (6, 3)
+    3. (4, 3)
+    4. (4, 2)
+    5. (4, 1)
+    6. (3, 1)
+    7. (2, 1)
+    8. (1, 1)
+    9. (1, 2)
+    10. (3, 3)
+    11. (5, 4)
+    12. (5, 5)
+
+Problem 4.
+    1. (5, 3)
+    2. (5, 4)
+    3. (4, 3)
+    4. (6, 3)
+    5. (5, 5)
+    6. (3, 3)
+    7. (4, 2)
+    8. (5, 6)
+    9. (4, 5)
+    10. (4, 1)
+    11. (5, 7)
+    12. (3, 5)
+
+    Using a stack to solve a maze illustrates Depth-First Search (DFS). The algorithm searches fully down a path until it hits a dead end. Then it backtracks to the last "junction" or the last undiscovered point and continues moving from that point in a different direction.
+    On the other hand, using a queue to solve a maze illustrates Breadth-First Search (BFS). The algorithm searches the points closer to the starting point first for a possible path, and keeps exploring points closer to the current square (like "ripples in a pond").
+
