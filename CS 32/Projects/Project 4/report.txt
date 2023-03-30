@@ -1,0 +1,8 @@
+I did not have any of the following parts of the project that I am aware of:
+    - that you were unable to finish
+    - that have bugs that you have not yet been able to fix
+    - that use banned STL components (perhaps because you used them for placeholder implementations but didn’t have time to rewrite the code to remove them)
+
+Testing:
+I started with a small moviestest.txt and userstext.txt file with around 5 movies/users in them. At first, I created a printMovies function in my MovieDatabase .cpp and .h files that printed out all the movies within the m_movies vector. This ensured that all the movies were being loaded correctly. I had done the same for the UserDatabase class. Then, after implementing the TreeMultiMap, I printed out the TreeMultiMap objects id2Movie, director2Movie, actor2Movie, and genre2Movie in MovieDatabase and email2User in UserDatabase.
+In the moviestest.txt, I inserted a copy of the Arbalest Movie as "The Arbalest 2" with a different ID and changed its genres, actors, and directors in various combinations to check the scores outputed for that movie with reccommend_movies.
