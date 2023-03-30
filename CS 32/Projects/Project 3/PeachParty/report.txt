@@ -1,0 +1,95 @@
+1) DESCRIPTION:
+    The BankSquare is a member of the Square class which is derived from the Actor class. Every time a tick is incremented, in the StudentWorld::move, the program iterates through all the actors and calls their doSomething methods, and StudentWorld includes the template for the Actor class header. Each Actor object has a member variable along with setter and getter methods that checks/returns if it is a member of the Baddie class, and for every square apart from DroppingSquare, if the Actor is a Baddie, then the Square's doSomething method should just return without doing anything. Otherwise, it will call the Square's doSomething which just checks if the Square is alive or not.
+    Then, it will iterate through each of the players and create a pointer to that Player. If the Player's coordinates match with those of the BankSquare it will do one of the following things: 1) If its state is "waiting to roll", if the bank member variable of StudentWorld is empty, it will simply return, otherwise it will call the withdrawBank (specified later) by passing in the player and set the player's member variable that checks if it is new to not new. 2) else, this means the player has not landed. If the player has no coins, the bank will not take anything and simply return; otherwise it will call the depositBank (specified later) method by passing in that player.
+    The withdrawBank and depositBank methods takes in a pointer to a player and is specified inline in the Actor header file. withdrawBank increments the player's coins by however many coins it gets that the bank contains, and then plays the appropriate sound in the StudentWorld. depositBank decreases the player's coins by 5 (or however many it has if it doesn't have at least 5) and adds those coins to the bank in StudentWorld.
+    The BankSquare implementation is under 4).
+
+2) FUNCTIONALITY:
+    To my knowledge, I have not failed to finish any functionality and have fixed all bugs in my classes that I have come across.
+
+3) ASSUMPTIONS:
+    1. CoinSquare: spec is vague about what to do when the player has 0 coins and whether it should do anything/play any sounds. If the player has no coins, there are no coins that can be taken away from the player and thus the CoinSquare should do nothing.
+    2. BankSquare Deposit: spec is vague about what to do when the player has 0 coins and whether it should do anything/play any sounds. If the player has no coins, there is nothing to deposit in the bank and thus the BankSquare should do nothing.
+    3. BankSquare Withdraw: spec is vague about what to do when the bank has 0 coins and whether it should do anything/play any sounds. If the bank has no coins, there is nothing to withdraw from the bank and thus the BankSquare should do nothing.
+    4. In StudentWorld::move, the program assumes that iterating through all the actors and deleting dead actors in one loop is acceptable so that the deaths of actors are independent of each other in the order of which they are deleted.
+    5. Assume that the CoinSquare that the players start on add 3 coins from the beginning.
+    6. If a player lands on Baddie and a Baddie is on a Square, the order in which the doSomethings for the Squares and the Baddies are evoked does not matter.
+    7. If a player teleports to a random square and it is the exact same square at which the player was before, it is still a correct teleport.
+    8. If a player teleports to an Event Square it will not run the doSomething of the new Event Square. This is to prevent an infinite loop when the swap function is run.
+    9. If a player teleports onto a fork and it chooses a random direction, the only time it can go back in the direction it came from is if there is a Directional Square right in front of it pointing it to the direction it came from.
+    
+4) BANKSQUARE IMPLEMENTATION:
+    void BankSquare::doSomething(){
+        if (isBaddie()) return;
+        Square::doSomething();
+        for (int i = 1; i <= NUMPLAYERS; i++){
+            Avatar* player = getWorld()->getPlayer(i);
+            if ((player->getX() == getX()) && (player->getY() == getY())){
+                if (player->getState() == WAITING_TO_ROLL){
+                    if (getWorld()->getBank() == 0) return;
+                    withdrawBank(player);
+                    player->setChanged(true);
+                }
+                else{
+                    if (player->getCoins() == 0) return; //nothing to deposit if there are no coins
+                    depositBank(player);
+                }
+            }
+        }
+    }
+    class BankSquare: public Square{
+        public:
+            BankSquare(StudentWorld* world, int imageID, int x, int y) : Square(world, imageID, x, y){}
+            virtual void doSomething();
+        
+            virtual void withdrawBank(Avatar* player){
+                player->setCoins(player->getCoins() + getWorld()->getBank());
+                getWorld()->setBank(0);
+                getWorld()->playSound(SOUND_WITHDRAW_BANK);
+            }
+        
+            virtual void depositBank(Avatar* player){
+                int numCoins = player->getCoins();
+                if (numCoins < 5){
+                    player->setCoins(0);
+                    getWorld()->setBank(getWorld()->getBank() + numCoins);
+                }
+                else{
+                    player->setCoins(player->getCoins() - 5);
+                    getWorld()->setBank(getWorld()->getBank() + 5);
+                }
+                getWorld()->playSound(SOUND_DEPOSIT_BANK);
+            }
+    };
+
+B+++++    +++++b
++    ^++++b    +
+-    +    +    -
++    $    +    +
+B    +    +    +
+B    +    +    !
++    B    +    +
+-    +    +    +
+!    B    +    +
+*    B    !    +
++    +    +    +
++    !    +    -
++    b++++v    +
++    +    -    +
+@+!+++    ++++!+
+
+B+++++    +++++b
++    ^++++b    +
+-    +    +    -
++    $    +    +
++    +    +    +
++    +    +    !
++    +    +    +
+-    +    +    +
+!    +    +    +
+*    +    !    +
++    +    +    +
++    !    +    -
++    b++++v    +
++    +    -    +
+@+!+++    ++++!+
